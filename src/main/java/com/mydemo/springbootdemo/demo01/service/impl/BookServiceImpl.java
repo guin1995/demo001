@@ -24,4 +24,11 @@ public class BookServiceImpl implements BookService {
     public void deleteBook(long id) {
         bm.deleteBook(id);
     }
+
+    @Override
+    public void saveBook(Book book) {
+        bm.saveBook(book);
+    }
+
+
 }

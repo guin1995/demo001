@@ -10,4 +10,8 @@
         delete book where id=#{id};
     </delete>
 
+    <insert id="saveBook" parameterType="com.mydemo.springbootdemo.demo01.enety.Book">
+        insert into book(name,date ,price) values(#{name},#{date},#{price});
+    </insert>
+
 </mapper>

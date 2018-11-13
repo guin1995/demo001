@@ -16,4 +16,6 @@ public interface BookMapper {
      * @param id
      */
     void deleteBook(long id);
+
+    void saveBook(Book book);
 }
