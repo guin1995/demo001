@@ -6,28 +6,40 @@ import com.mydemo.springbootdemo.demo01.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class BookServiceImpl implements BookService {
 
     @Autowired
-    private BookMapper bm;
+    private BookMapper bookMapper;
 
 
 
     @Override
     public void updateBook(Book book) {
-        bm.updateBook(book);
+        bookMapper.save(book);
     }
 
     @Override
     public void deleteBook(long id) {
-        bm.deleteBook(id);
+       bookMapper.deleteById(id);
     }
 
     @Override
     public void saveBook(Book book) {
-        bm.saveBook(book);
+        bookMapper.save(book);
+    }
+
+    @Override
+    public List<Book> findAll() {
+        return bookMapper.findAll();
+    }
+
+    @Override
+    public Book findById(Long id) {
+        return bookMapper.findBookById(id);
     }
 
 

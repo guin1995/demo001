@@ -4,7 +4,10 @@ import com.mydemo.springbootdemo.demo01.enety.Book;
 import com.mydemo.springbootdemo.demo01.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * 传统的代码方式
@@ -26,7 +29,9 @@ public class BookController {
      * @return
      */
     @RequestMapping(value="/list")
-    public String list(){
+    public String list(Model model){
+        List<Book> bookList = bookService.findAll();
+        model.addAttribute("bookList",bookList);
         return "book/list";
     }
 
@@ -34,19 +39,15 @@ public class BookController {
      * 去添加
      * @return
      */
-    @RequestMapping(value="/add")
-    public String add(){
-        return "add";
+    @RequestMapping(value="/addOrUpdate")
+    public String add(Model model,Long id){
+        if(id!=null){
+            Book book = bookService.findById(id);
+            model.addAttribute("book",book);
+        }
+        return "book/add";
     }
 
-    /**
-     * 去修改
-     * @return
-     */
-    @RequestMapping(value="/update")
-    public String update(){
-        return "add";
-    }
 
     /**
      * 保存
