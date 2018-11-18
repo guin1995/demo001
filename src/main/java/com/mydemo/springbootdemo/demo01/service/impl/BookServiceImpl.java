@@ -5,6 +5,7 @@ import com.mydemo.springbootdemo.demo01.mapper.BookMapper;
 import com.mydemo.springbootdemo.demo01.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -23,8 +24,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteBook(long id) {
-       bookMapper.deleteById(id);
+    public void deleteBook(String ids) {
+        if(!StringUtils.isEmpty(ids)){
+            String[] arrays = ids.split(",");
+            for (String id : arrays) {
+                bookMapper.deleteById(Long.parseLong(id));
+            }
+        }
     }
 
     @Override

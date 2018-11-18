@@ -19,7 +19,7 @@ public interface BookService {
 
     void updateBook(Book book);
 
-    void deleteBook(long id);
+    void deleteBook(String ids);
 
     void saveBook(Book book);
 
