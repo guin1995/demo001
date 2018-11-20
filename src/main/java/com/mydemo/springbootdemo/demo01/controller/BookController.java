@@ -2,6 +2,7 @@ package com.mydemo.springbootdemo.demo01.controller;
 
 import com.mydemo.springbootdemo.demo01.enety.Book;
 import com.mydemo.springbootdemo.demo01.service.BookService;
+import com.mydemo.springbootdemo.demo01.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,10 +31,34 @@ public class BookController {
      * @return
      */
     @RequestMapping(value="/list",method = RequestMethod.GET)
-    public String list(Model model){
+    public String list(Page page, Model model){
         List<Book> bookList = bookService.findAll();
-        model.addAttribute("bookList",bookList);
+        setPage(page,bookList);
+        model.addAttribute("page",page);
         return "book/list";
+    }
+
+    /**
+     * 设置分页
+     * @param page
+     * @param list
+     */
+    public void setPage(Page page,List<?> list){
+        if (page.getCurrentPage() == null){
+            page.setCurrentPage(1);
+        } else {
+            page.setCurrentPage(page.getCurrentPage());
+        }
+        //设置每页数据为十条
+        page.setPageSize(2);
+        //每页的开始数
+        page.setStar((page.getCurrentPage() - 1) * page.getPageSize());
+        //list的大小
+        int count = list.size();
+        //设置总页数
+        page.setTotalPage(count % 2 == 0 ? count / 2 : count / 2 + 1);
+        //对list进行截取
+        page.setDataList(list.subList(page.getStar(),count-page.getStar()>page.getPageSize()?page.getStar()+page.getPageSize():count));
     }
 
     /**

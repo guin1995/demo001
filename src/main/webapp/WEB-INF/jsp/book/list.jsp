@@ -21,6 +21,10 @@
             $("#ids").val(ids);
             $("#deleteFrom").submit();
         }
+
+        function goPage(page){
+            location.href="/book/list?currentPage="+page;
+        }
     </script>
 </head>
 <body>
@@ -40,7 +44,7 @@
                     <td style="width: 100px">价格</td>
                     <td style="width: 30px"></td>
                 </tr>
-            <c:forEach items="${bookList}" var="book">
+            <c:forEach items="${page.dataList}" var="book">
                 <tr>
                     <td><input type="checkbox" name="id" id="id" value="${book.id}"/></td>
                     <td>${book.name}</td>
@@ -49,6 +53,45 @@
                 </tr>
             </c:forEach>
         </table>
+    </div>
+    <div style="width: 14%">
+        <div style="text-align:center; margin-top:40px" id="venderfen">
+            当前第${page.currentPage }页/共${page.totalPage }页
+            <c:choose>
+                <c:when test="${page.currentPage==1&&page.totalPage==0}">
+
+                </c:when>
+                <c:when test="${page.currentPage==1&&page.totalPage==1}">
+
+                </c:when>
+                <c:when test="${page.currentPage==2&&page.totalPage==2}">
+                    <input type="button" value="首页" onclick="goPage(1)" />
+                    <input type="button" value="上一页"
+                           onclick="goPage(${page.currentPage-1})" />
+                </c:when>
+                <c:when test="${page.currentPage==1 }">
+                    <input type="button" value="上一页" >
+                    <input type="button" value="下一页"
+                           onclick="goPage(${page.currentPage+1})" />
+                    <input type="button" value="末页"
+                           onclick="goPage(${page.totalPage})" />
+                </c:when>
+                <c:when test="${page.currentPage==page.totalPage }">
+                    <input type="button" value="首页" onclick="goPage(1)" />
+                    <input type="button" value="上一页"
+                           onclick="goPage(${page.currentPage-1})" />
+                </c:when>
+                <c:otherwise>
+                    <input type="button" value="首页" onclick="goPage(1)" />
+                    <input type="button" value="上一页"
+                           onclick="goPage(${page.currentPage-1})" />
+                    <input type="button" value="下一页"
+                           onclick="goPage(${page.currentPage+1})" />
+                    <input type="button" value="末页"
+                           onclick="goPage(${page.totalPage})" />
+                </c:otherwise>
+            </c:choose>
+        </div>
     </div>
 </body>
 </html>

@@ -23,6 +23,8 @@ public interface BookService {
 
     void saveBook(Book book);
 
+    List<Book> findAll(String page);
+
     List<Book> findAll();
 
     Book findById(Long id);
